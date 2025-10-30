@@ -42,11 +42,13 @@
               </button>
             </div>
 
-            <div class="preview-container" >
-              <div ref="resumeContent" class="resume-content" :style="{ transform: `scale(${previewZoom})` }">
-                <ResumeRenderer v-if="selectedTemplate" :form-data="formData" :template="selectedTemplate" />
-              </div>
-            </div>
+          <div class="preview-container">
+  <div ref="resumeContent" class="resume-content">
+    <div class="resume-scaler" :style="{ transform: `scale(${previewZoom})` }">
+      <ResumeRenderer v-if="selectedTemplate" :form-data="formData" :template="selectedTemplate" />
+    </div>
+  </div>
+</div>
 
           </div>
         </div>
@@ -491,17 +493,28 @@ onMounted(() => {
   padding: 0rem;
   max-height: calc(100vh - 12rem);
   overflow: auto;
-  /* transform-origin: top center; */
-  transition: transform 0.2s;
   background: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .resume-content {
-  /* padding: 0; */
-  /* background: white; */
-  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
-  /* min-height: 297mm; */
-  /* A4高度 */
+  padding: 2rem; /* 添加内边距，让缩放后的内容有空间 */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.resume-scaler {
+  transform-origin: top center; /* 从顶部中心开始缩放 */
+  transition: transform 0.2s ease; /* 平滑过渡 */
+  /* 确保缩放容器不会影响布局 */
+  display: inline-block;
+  width: auto;
+  height: auto;
 }
 
 .action-bar {
