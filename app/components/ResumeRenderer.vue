@@ -1,7 +1,10 @@
-<!-- 简历渲染 -->
+<!-- 简历渲染组件 -->
 <template>
-
-  <div class="resume-renderer" :style="containerStyles">
+  <div 
+    ref="resumeContentRef" 
+    class="resume-renderer" 
+    :style="containerStyles"
+  >
     <!-- 一栏布局 -->
     <template v-if="template.layout.page.columns === 1">
       <!-- 头部 -->
@@ -51,7 +54,13 @@
           <!-- 头部信息（左侧） -->
           <div class="sidebar-header" :style="sidebarHeaderStyles">
             <div v-if="formData.personal.avatar" class="avatar-wrapper" :style="avatarWrapperStyles">
-              <img :src="formData.personal.avatar" alt="头像" class="avatar" :style="avatarStyles" />
+              <img 
+                :src="formData.personal.avatar" 
+                alt="头像" 
+                class="avatar" 
+                :style="avatarStyles"
+                crossorigin="anonymous"
+              />
             </div>
             <h1 class="name" :style="nameStyles">
               {{ formData.personal.firstName }}<br/>{{ formData.personal.lastName }}
@@ -86,12 +95,11 @@
         </main>
       </div>
     </template>
-
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import type { Template, ResumeData } from '~/types/template'
 import type { CSSProperties } from 'vue'
 import RendererSection from './RendererSection.vue'
@@ -102,6 +110,22 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+// 简历内容
+const resumeContentRef = ref<HTMLElement | null>(null);
+
+// 注册到 PDF 导出
+onMounted(() => {
+  if (resumeContentRef.value) {
+    const { setExportElement } = pdfExportState;
+    setExportElement(resumeContentRef.value);
+  }
+});
+
+// 暴露 ref 给父组件
+defineExpose({
+  resumeContentRef
+});
 
 // 类型安全辅助函数
 const toCSSProperties = <T extends Record<string, any>>(styles: T): CSSProperties => {
@@ -124,7 +148,7 @@ const sectionConfigs: SectionConfig[] = [
   { key: 'works', title: '工作经历', icon: 'fa-briefcase', position: 'right' },
   { key: 'projects', title: '项目经历', icon: 'fa-project-diagram', position: 'right' },
   { key: 'educations', title: '教育经历', icon: 'fa-graduation-cap', position: 'right' },
-  {key: 'honors', title: '荣誉奖励', icon: 'fa-graduation-cap', position: 'right'}
+  { key: 'honors', title: '荣誉奖励', icon: 'fa-graduation-cap', position: 'right' }
 ]
 
 // 获取可见的章节

@@ -139,7 +139,7 @@
           </svg>
           清空表单
         </button>
-        <button 
+        <!-- <button 
           type="submit" 
           class="w-full sm:w-auto bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-10 py-4 rounded-lg font-bold transition-all shadow-lg hover:shadow-xl active:scale-95 text-lg"
         >
@@ -147,7 +147,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           保存简历
-        </button>
+        </button> -->
       </div>
     </form>
   </div>
@@ -169,7 +169,7 @@ import PersonalItem from '~/components/PersonalItem.vue'
 // import type { ResumeData } from '~/types/template'
 
 
-const props = defineProps<{ modelValue?: ResumeData }>()
+const props = defineProps<{ modelValue?: ResumeData}>()
 const emit = defineEmits(['update:modelValue'])
 
 const { 

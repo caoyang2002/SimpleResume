@@ -50,6 +50,7 @@ const defaultConfig: DeepPartial<Template> = {
       levelStyle: 'bar'
     }
   },
+  
   style: {
     global: {
       fonts: {

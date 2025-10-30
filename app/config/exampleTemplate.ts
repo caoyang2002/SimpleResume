@@ -24,7 +24,7 @@ export function getSampleResumeData(): ResumeData {
     address: '北京市朝阳区',
     website: 'https://zhangsan.dev',
     github: 'github.com/zhangsan',
-    avatar:"https://www.caoyang2002.xyz/about/simons.jpg",
+    avatar:"https://ohohresume.vercel.app/face.jpg",
     
     // 个人简介
     summary: '5年前端开发经验，精通Vue、React等主流框架。有大型项目架构经验，擅长性能优化和工程化建设。热爱开源，注重代码质量和用户体验。',
@@ -196,7 +196,7 @@ export function getMinimalSampleData(): ResumeData {
     email: 'zhangsan@example.com',
     phone: '138-0000-0000',
     summary: '3年前端开发经验，熟悉Vue和React。',
-    avatar:"https://www.caoyang2002.xyz/about/simons.jpg",
+    avatar:"https://ohohresume.vercel.app/face.jpg",
     },
     works: [
       {

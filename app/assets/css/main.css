@@ -38,3 +38,92 @@
 .overflow-hidden {
   overflow: hidden !important;
 }
+
+
+/* print */
+/* 在你的全局 CSS 文件或 nuxt.config.ts 中添加 */
+
+/* ================ 打印样式优化 ================ */
+@media print {
+  /* 强制保留所有颜色和背景 */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
+  /* 页面设置 */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  
+  /* 隐藏不需要打印的元素 */
+  .no-print,
+  .pdf-exporter,
+  button,
+  nav,
+  .toolbar {
+    display: none !important;
+  }
+  
+  /* 简历容器优化 */
+  .resume-renderer {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    page-break-after: auto;
+  }
+  
+  /* 防止内容被切断 */
+  .resume-header,
+  .resume-section,
+  .sidebar,
+  .main-content {
+    page-break-inside: avoid;
+  }
+  
+  /* 确保背景色和图片显示 */
+  .sidebar,
+  .resume-header {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* 字体优化 */
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+  
+  h1 { font-size: 20pt; }
+  h2 { font-size: 16pt; }
+  h3 { font-size: 14pt; }
+  h4 { font-size: 12pt; }
+  
+  /* 链接优化 */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  /* 确保图片正确显示 */
+  img {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+}
+
+/* ================ 打印预览样式（用于打印窗口方案） ================ */
+@media screen {
+  .print-preview {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+}
+/* --------- */

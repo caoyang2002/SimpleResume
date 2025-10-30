@@ -1,14 +1,13 @@
 <template>
-  <Tips/>
-  <div class="resume-page">
+  <Tips v-if="!showPreview"/>
+  <PrintPreview v-if="showPreview && selectedTemplate" :form-data="formData" :template="selectedTemplate"
+              @close="hidePrintPreview" />
+  <div class="resume-page" v-if="!showPreview">
+
     <!-- 步骤 1: 选择模板 -->
     <div v-if="currentStep === 1" class="step-container">
-      <TemplateSelector
-        v-model="selectedTemplateId"
-        :sample-data="sampleData"
-        @select="handleTemplateSelect"
-      />
-      
+      <TemplateSelector v-model="selectedTemplateId" :sample-data="sampleData" @select="handleTemplateSelect" />
+
       <div class="action-bar">
         <button @click="goToNextStep" class="btn-primary" :disabled="!selectedTemplateId">
           <i class="fas fa-arrow-right"></i>
@@ -18,7 +17,7 @@
     </div>
 
     <!-- 步骤 2: 填写信息 + 实时预览 -->
-    <div v-else-if="currentStep === 2" class="step-container">
+    <div v-else-if="currentStep === 2" class="step-container" >
       <div class="grid grid-cols-2 gap-4 mb-8">
         <!-- 实时预览 -->
         <div class="preview-section">
@@ -37,49 +36,51 @@
                   <i class="fas fa-sync-alt"></i>
                 </button>
               </div>
-            </div>
             
+              <button @click="showPrintPreview" class="preview-print-button">
+                <i class="fas fa-print"></i> 打印预览
+              </button>
+            </div>
+           
+
+
             <div class="preview-container" :style="{ transform: `scale(${previewZoom})` }">
               <div ref="resumeContent" class="resume-content">
-                <ResumeRenderer
-                  v-if="selectedTemplate"
-                  :form-data="formData"
-                  :template="selectedTemplate"
-                />
+                <ResumeRenderer v-if="selectedTemplate" :form-data="formData" :template="selectedTemplate" />
               </div>
             </div>
           </div>
         </div>
-        
+
         <!-- 表单 -->
-        <div class="form-section">
+        <div class="form-section" >
           <div class="form-header">
             <h2>编辑简历信息</h2>
             <p>填写您的个人信息，右侧实时预览</p>
           </div>
-          <ResumeForm v-model="formData" />
-           <div class="action-bar">
-        <button @click="currentStep = 1" class="btn-secondary">
-          <i class="fas fa-arrow-left"></i>
-          上一步
-        </button>
-        <button @click="handleSaveDraft" class="btn-secondary">
-          <i class="fas fa-save"></i>
-          保存草稿
-        </button>
-        <button @click="handleExport" class="btn-primary" :disabled="exporting">
-          <i class="fas fa-download"></i>
-          {{ exporting ? '导出中...' : '导出简历' }}
-        </button>
-      </div>
+          <div></div>
+          <ResumeForm v-model="formData"  />
+          <div class="action-bar">
+            <button @click="currentStep = 1" class="btn-secondary">
+              <i class="fas fa-arrow-left"></i>
+              上一步
+            </button>
+            <!-- <button @click="handleSaveDraft" class="btn-secondary">
+              <i class="fas fa-save"></i>
+              保存草稿
+            </button> -->
+            <!-- <button @click="handleExport" class="btn-primary" :disabled="exporting">
+              <i class="fas fa-download"></i>
+              {{ exporting ? '导出中...' : '导出简历' }}
+            </button> -->
+          </div>
         </div>
       </div>
 
-     
+
     </div>
 
-    <!-- 导出选项弹窗 -->
-    <Teleport to="body">
+    <!-- <Teleport to="body" >
       <div v-if="showExportModal" class="export-modal" @click="showExportModal = false">
         <div class="modal-content" @click.stop>
           <header class="modal-header">
@@ -88,7 +89,6 @@
               <i class="fas fa-times"></i>
             </button>
           </header>
-         E
           <div class="modal-body">
             <div class="export-options">
               <button @click="handleExportPDF" class="export-option" :disabled="exporting">
@@ -99,7 +99,7 @@
                 </div>
                 <i v-if="exporting && currentExportType === 'pdf'" class="fas fa-spinner fa-spin"></i>
               </button>
-              
+
               <button @click="handleExportImage" class="export-option" :disabled="exporting">
                 <i class="fas fa-image"></i>
                 <div>
@@ -108,7 +108,7 @@
                 </div>
                 <i v-if="exporting && currentExportType === 'image'" class="fas fa-spinner fa-spin"></i>
               </button>
-              
+
               <button @click="handleExportToWord" class="export-option" :disabled="exporting">
                 <i class="fas fa-file-word"></i>
                 <div>
@@ -118,7 +118,7 @@
                 <i v-if="exporting && currentExportType === 'word'" class="fas fa-spinner fa-spin"></i>
               </button>
             </div>
-            
+
             <div v-if="exportError" class="error-message">
               <i class="fas fa-exclamation-triangle"></i>
               {{ exportError }}
@@ -128,13 +128,12 @@
       </div>
     </Teleport>
 
-    <!-- 成功提示 -->
-    <Teleport to="body">
+    <Teleport to="body" >
       <div v-if="showSuccessToast" class="success-toast">
         <i class="fas fa-check-circle"></i>
         <span>{{ successMessage }}</span>
       </div>
-    </Teleport>
+    </Teleport> -->
   </div>
 </template>
 
@@ -148,6 +147,21 @@ import { getSampleResumeData } from '~/config/exampleTemplate'
 import { exportResumeToPDF, exportResumeToImage, exportResumeToWord } from '~/utils/export'
 import type { Template, ResumeData } from '~/types/template'
 import "./assets/css/main.css"
+import PrintPreview from '~/components/PrintPreview.vue'
+
+
+// 打印预览状态
+const showPreview = ref(false)
+
+// 显示打印预览
+const showPrintPreview = () => {
+  showPreview.value = true
+}
+// 隐藏打印预览
+const hidePrintPreview = () => {
+  showPreview.value = false
+}
+
 
 // 状态管理
 const currentStep = ref(1)
@@ -218,23 +232,23 @@ const handleExport = () => {
 // 添加导出前的优化方法
 const optimizeForExport = async (): Promise<void> => {
   if (!resumeContent.value) return
-  
+
   // 临时移除可能影响导出的样式
   const element = resumeContent.value
-  
+
   // 保存原始样式
   const originalMaxHeight = element.style.maxHeight
   const originalOverflow = element.style.overflow
   const originalTransform = element.style.transform
-  
+
   // 应用导出优化样式
   element.style.maxHeight = 'none'
   element.style.overflow = 'visible'
   element.style.transform = 'none'
-  
+
   // 等待重绘
   await new Promise(resolve => setTimeout(resolve, 200))
-  
+
   return new Promise((resolve) => {
     // 在下一个动画帧恢复样式
     requestAnimationFrame(() => {
@@ -251,25 +265,25 @@ const handleExportPDF = async () => {
     exportError.value = '简历内容未加载完成，请稍后重试'
     return
   }
-  
+
   exporting.value = true
   currentExportType.value = 'pdf'
   exportError.value = ''
 
   try {
     await nextTick()
-    
+
     // 导出前优化
     await optimizeForExport()
-    
+
     const filename = `简历_${formData.value.personal.firstName}${formData.value.personal.lastName}_${new Date().getTime()}.pdf`
-    
+
     await exportResumeToPDF(resumeContent.value, {
       filename,
       scale: 3, // 提高质量
       quality: 1
     })
-    
+
     showSuccess('PDF导出成功！')
     showExportModal.value = false
   } catch (error) {
@@ -286,26 +300,26 @@ const handleExportImage = async () => {
     exportError.value = '简历内容未加载完成，请稍后重试'
     return
   }
-  
+
   exporting.value = true
   currentExportType.value = 'image'
   exportError.value = ''
 
   try {
     await nextTick()
-    
+
     // 导出前优化
     await optimizeForExport()
-    
+
     const filename = `简历_${formData.value.personal.firstName}${formData.value.personal.lastName}_${new Date().getTime()}.png`
-    
+
     await exportResumeToImage(resumeContent.value, {
       filename,
       format: 'png',
       scale: 3, // 提高质量
       quality: 1
     })
-    
+
     showSuccess('图片导出成功！')
     showExportModal.value = false
   } catch (error) {
@@ -318,20 +332,20 @@ const handleExportImage = async () => {
 }
 const handleExportToWord = async () => {
   if (!resumeContent.value) return
-  
+
   exporting.value = true
   currentExportType.value = 'word'
   exportError.value = ''
 
   try {
     await nextTick()
-    
+
     const filename = `简历_${formData.value.personal.firstName}${formData.value.personal.lastName}_${new Date().getTime()}.doc`
-    
+
     await exportResumeToWord(resumeContent.value, {
       filename
     })
-    
+
     showSuccess('Word文档导出成功！')
     showExportModal.value = false
   } catch (error) {
@@ -371,7 +385,10 @@ const loadDraft = () => {
 }
 
 // 初始化时加载草稿
-loadDraft()
+onMounted(() => {
+  loadDraft();
+});
+
 </script>
 
 <style scoped>
@@ -485,7 +502,8 @@ loadDraft()
 .resume-content {
   background: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  min-height: 297mm; /* A4高度 */
+  min-height: 297mm;
+  /* A4高度 */
 }
 
 .action-bar {
@@ -566,6 +584,7 @@ loadDraft()
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -696,6 +715,7 @@ loadDraft()
     opacity: 0;
     transform: translateX(100%);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
