@@ -147,6 +147,7 @@ import { templates, getTemplateById } from '~/config/templates'
 import { getSampleResumeData } from '~/config/exampleTemplate'
 import { exportResumeToPDF, exportResumeToImage, exportResumeToWord } from '~/utils/export'
 import type { Template, ResumeData } from '~/types/template'
+import "./assets/css/main.css"
 
 // 状态管理
 const currentStep = ref(1)
