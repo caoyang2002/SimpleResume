@@ -2,7 +2,8 @@
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  
+  ssr:false,
+
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss'],
   css: ['../assets/css/main.css'],
@@ -12,9 +13,10 @@ export default defineNuxtConfig({
     transpile: ['jspdf', 'html2canvas']
   },
 
-  // Add library to client-side only rendering
-  ssr: true,
   experimental: {
     clientFallback: true
+  },
+   nitro: {
+    preset: 'github-pages'
   }
 })
