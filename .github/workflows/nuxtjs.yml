@@ -31,6 +31,12 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 8
+          run_install: false
+          
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
           
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -41,15 +47,15 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            dist
+            ${{ env.STORE_PATH }}
             .nuxt
-            node_modules
-          key: ${{ runner.os }}-nuxt-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+            dist
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-nuxt-pnpm-
+            ${{ runner.os }}-pnpm-
             
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
         
       - name: Static HTML export with Nuxt
         run: pnpm run generate
