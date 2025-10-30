@@ -25,39 +25,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: 'pnpm'
           
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
-          
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
           
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: nuxt
           
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ env.STORE_PATH }}
-            .nuxt
-            dist
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-            
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-        
-      - name: Static HTML export with Nuxt
+        run: pnpm install
+          
+      - name: Generate static site
         run: pnpm run generate
         
       - name: Upload artifact
