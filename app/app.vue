@@ -167,7 +167,7 @@ const currentStep = ref(1)
 const selectedTemplateId = ref<string>('')
 const sampleData = getSampleResumeData()
 const formData = ref<ResumeData>(getSampleResumeData())
-const previewZoom = ref(1) // 初始大小
+const previewZoom = ref(0.8) // 初始大小
 const showExportModal = ref(false)
 const exporting = ref(false)
 const currentExportType = ref<'pdf' | 'image' | 'word' | null>(null)
@@ -205,7 +205,7 @@ const zoomOut = () => {
 }
 
 const resetZoom = () => {
-  previewZoom.value = 1
+  previewZoom.value = 0.8
 }
 
 const handleSaveDraft = () => {

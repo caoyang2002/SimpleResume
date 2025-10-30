@@ -1,4 +1,4 @@
-<!-- 表单的 Section -->
+<!-- Section for form -->
 <template>
   <div class="mb-8">
     <div class="flex items-center justify-between mb-4 pb-3 border-b-2" :style="{ borderColor: colors.primary }">
