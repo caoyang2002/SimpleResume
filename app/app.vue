@@ -23,7 +23,7 @@
         <div class="preview-section">
           <div class="preview-sticky">
             <div class="preview-header">
-              <h3>实时预览</h3>
+              <h3>实时预览（A4）</h3>
               <div class="preview-actions">
                 <button @click="zoomOut" class="icon-btn" title="缩小">
                   <i class="fas fa-search-minus"></i>
@@ -41,22 +41,21 @@
                 <i class="fas fa-print"></i> 打印预览
               </button>
             </div>
-           
 
-
-            <div class="preview-container" :style="{ transform: `scale(${previewZoom})` }">
-              <div ref="resumeContent" class="resume-content">
+            <div class="preview-container" >
+              <div ref="resumeContent" class="resume-content" :style="{ transform: `scale(${previewZoom})` }">
                 <ResumeRenderer v-if="selectedTemplate" :form-data="formData" :template="selectedTemplate" />
               </div>
             </div>
+
           </div>
         </div>
 
-        <!-- 表单 -->
+        <!-- 表单编辑 -->
         <div class="form-section" >
           <div class="form-header">
             <h2>编辑简历信息</h2>
-            <p>填写您的个人信息，右侧实时预览</p>
+            <p>填写您的个人信息，左侧实时预览</p>
           </div>
           <div></div>
           <ResumeForm v-model="formData"  />
@@ -76,8 +75,6 @@
           </div>
         </div>
       </div>
-
-
     </div>
 
     <!-- <Teleport to="body" >
@@ -168,7 +165,7 @@ const currentStep = ref(1)
 const selectedTemplateId = ref<string>('')
 const sampleData = getSampleResumeData()
 const formData = ref<ResumeData>(getSampleResumeData())
-const previewZoom = ref(0.8)
+const previewZoom = ref(1) // 初始大小
 const showExportModal = ref(false)
 const exporting = ref(false)
 const currentExportType = ref<'pdf' | 'image' | 'word' | null>(null)
@@ -206,7 +203,7 @@ const zoomOut = () => {
 }
 
 const resetZoom = () => {
-  previewZoom.value = 0.8
+  previewZoom.value = 1
 }
 
 const handleSaveDraft = () => {
@@ -491,18 +488,19 @@ onMounted(() => {
 }
 
 .preview-container {
-  padding: 2rem;
+  padding: 0rem;
   max-height: calc(100vh - 12rem);
   overflow: auto;
-  transform-origin: top center;
+  /* transform-origin: top center; */
   transition: transform 0.2s;
   background: #f8f9fa;
 }
 
 .resume-content {
-  background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  min-height: 297mm;
+  /* padding: 0; */
+  /* background: white; */
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
+  /* min-height: 297mm; */
   /* A4高度 */
 }
 
@@ -726,8 +724,31 @@ onMounted(() => {
   font-size: 1.25rem;
 }
 
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.preview-print-button {
+  background: #2196F3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-print-button:hover {
+  background: #1976D2;
+}
+
 /* 响应式 */
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
   .grid.grid-cols-2 {
     grid-template-columns: 1fr;
   }
@@ -739,9 +760,9 @@ onMounted(() => {
   .preview-container {
     max-height: 600px;
   }
-}
+} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .resume-page {
     padding: 1rem 0;
   }
@@ -761,5 +782,6 @@ onMounted(() => {
     right: 1rem;
     left: 1rem;
   }
-}
+} */
+
 </style>

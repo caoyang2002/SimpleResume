@@ -344,8 +344,8 @@ const mainContentStyles = computed(() =>
 
 <style scoped>
 .resume-renderer {
-  width: 100%;
-  min-height: 100vh;
+  /* width: 100%; */
+  /* min-height: 100vh; */
   box-sizing: border-box;
 }
 
@@ -419,7 +419,7 @@ const mainContentStyles = computed(() =>
     break-inside: avoid;
   }
 }
-
+/* 
 @media (max-width: 768px) {
   .two-column-layout {
     grid-template-columns: 1fr !important;
@@ -429,5 +429,5 @@ const mainContentStyles = computed(() =>
     flex-direction: column;
     align-items: flex-start;
   }
-}
+} */
 </style>
