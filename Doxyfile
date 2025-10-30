@@ -1,0 +1,67 @@
+# 项目信息
+PROJECT_NAME           = "SimpleResume"
+PROJECT_NUMBER         = 1.0.0
+PROJECT_BRIEF          = "A simple resume builder application"
+OUTPUT_DIRECTORY       = docs
+OUTPUT_LANGUAGE        = Chinese
+
+# 输入配置
+INPUT                  = ./app \
+                         README.md
+INPUT_ENCODING         = UTF-8
+FILE_PATTERNS = *.vue *.ts *.js *.md
+RECURSIVE              = YES
+
+# 排除配置
+EXCLUDE                = ./app/node_modules \
+                         ./app/dist \
+                         ./app/__tests__
+
+# 扩展映射
+# EXTENSION_MAPPING      = vue=Javascript
+
+# 文档配置
+# EXTRACT_ALL            = YES    # 提取所有实体，即使没有文档
+# EXTRACT_PRIVATE        = NO     # 不提取私有成员
+EXTRACT_STATIC         = YES    # 提取静态成员
+
+# 输出配置
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+SEARCHENGINE           = YES
+GENERATE_TREEVIEW      = YES
+
+# Markdown 配置
+USE_MDFILE_AS_MAINPAGE = README.md
+MARKDOWN_SUPPORT       = YES
+
+# 源代码浏览
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+
+# 禁用图表（如果没有安装 Graphviz）
+# HAVE_DOT               = NO
+# CLASS_DIAGRAMS         = NO
+
+# 启用所有实体提取（即使没有文档）
+EXTRACT_ALL            = YES
+
+# 启用私有成员提取（可选）
+EXTRACT_PRIVATE        = NO
+
+# 启用静态成员提取
+EXTRACT_STATIC         = YES
+
+# 为没有文档的实体显示提示
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+
+# 源代码浏览
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+
+# 针对 JavaScript/TypeScript 优化
+OPTIMIZE_OUTPUT_JAVA   = YES
+
+# 启用 TypeScript 支持
+TYPEDEF_HIDES_STRUCT   = YES
