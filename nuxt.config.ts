@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     clientFallback: true
   },
    components: true,
-   srcDir: './pages',
+   srcDir: './app',
     // 路由配置
   routeRules: {
     '/': { prerender: true },

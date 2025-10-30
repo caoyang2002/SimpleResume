@@ -4,3 +4,37 @@
 
 
 /* 修复的滚动动画样式 */
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  display: inline-block;
+  animation: scroll 60s linear infinite;
+  -webkit-animation: scroll 60s linear infinite;
+  /* 确保动画在页面加载时立即开始 */
+  animation-delay: 0s !important;
+  -webkit-animation-delay: 0s !important;
+}
+
+/* 确保链接样式正确 */
+.animate-scroll a {
+  color: white;
+  text-decoration: underline;
+}
+
+.animate-scroll a:hover {
+  color: #fef08a; /* yellow-300 */
+}
+
+/* 确保容器正确隐藏溢出内容 */
+.overflow-hidden {
+  overflow: hidden !important;
+}
