@@ -55,6 +55,30 @@
         </button>
       </div>
 
+   <!-- 项目经历部分 -->
+      <Section title="项目经历" :items="formData.projects || []" :colors="sectionColors">
+        <template #item="{ item, index }">
+          <ProjectItem
+            :item="item" 
+            :index="index"
+            @remove="removeProject"
+          />
+        </template>
+      </Section>
+      
+      <div class="text-center">
+        <button 
+          type="button" 
+          @click="addProject"
+          class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-lg transition-all font-semibold shadow-md hover:shadow-lg active:scale-95"
+        >
+          <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          添加项目经历
+        </button>
+      </div>
+
       <!-- 教育经历部分 -->
       <Section title="教育经历" :items="formData.educations || []" :colors="sectionColors">
         <template #item="{ item, index }">
@@ -166,6 +190,7 @@ import SkillItem from './SkillItem.vue'
 import HonorItem from './HonorItem.vue'
 import { ref } from 'vue'
 import PersonalItem from '~/components/PersonalItem.vue'
+import ProjectItem from './ProjectItem.vue'
 // import type { ResumeData } from '~/types/template'
 
 
@@ -176,6 +201,8 @@ const {
   formData,
   addWork, 
   removeWork, 
+  removeProject,
+  addProject,
   addEducation, 
   removeEducation,
   addSkill, 
