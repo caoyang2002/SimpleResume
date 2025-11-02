@@ -1,48 +1,88 @@
 <!-- 简历渲染组件 -->
 <template>
-  <div 
-    ref="resumeContentRef" 
-    class="resume-renderer" 
-    :style="containerStyles"
-  >
+  <div ref="resumeContentRef" class="resume-renderer" :style="containerStyles">
     <!-- 一栏布局 -->
     <template v-if="template.layout.page.columns === 1">
       <!-- 头部 -->
-      <header class="resume-header" :style="headerStyles">
-        <div class="personal-info" :style="personalInfoStyles">
-          <h1 class="name" :style="nameStyles">
-            {{ formData.personal.firstName }} {{ formData.personal.lastName }}
-          </h1>
-          <p v-if="formData.personal.jobExpectation" class="job-title" :style="jobTitleStyles">
-            {{ formData.personal.jobExpectation }}
-          </p>
-          
-          <div class="contact-info" :style="contactStyles">
-            <span v-if="formData.personal.email" class="contact-item">
-              <i class="fas fa-envelope" :style="contactIconStyles"></i> {{ formData.personal.email }}
-            </span>
-            <span v-if="formData.personal.phone" class="contact-item">
-              <i class="fas fa-phone" :style="contactIconStyles"></i> {{ formData.personal.phone }}
-            </span>
-            <span v-if="formData.personal.wechat" class="contact-item">
-              <i class="fab fa-weixin" :style="contactIconStyles"></i> {{ formData.personal.wechat }}
-            </span>
-            <span v-if="formData.personal.address" class="contact-item">
-              <i class="fas fa-map-marker-alt" :style="contactIconStyles"></i> {{ formData.personal.address }}
-            </span>
+      <header class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden"
+        :style="headerStyles">
+        <!-- 装饰性背景图案 -->
+         <div>
+        <div v-if="template.layout.page.decorative === 'none'">
+         
+        </div>
+        <div v-if="template.layout.page.decorative === 'circle'">
+ <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
+            <div class="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-24 -translate-x-24"></div>
+          </div>
+        </div>
+        </div>
+
+
+        <div class="container mx-auto px-6 py-8 md:py-12 relative z-10">
+          <div class="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
+            <!-- 个人信息 -->
+            <div class="flex-1 text-center md:text-left" :style="personalInfoStyles">
+              <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 tracking-tight" :style="nameStyles">
+                {{ formData.personal.firstName }} {{ formData.personal.lastName }}
+              </h1>
+
+              <p v-if="formData.personal.jobExpectation" class="text-lg md:text-xl text-blue-100 font-medium mb-4"
+                :style="jobTitleStyles">
+                {{ formData.personal.jobExpectation }}
+              </p>
+
+              <!-- 联系方式 -->
+              <div class="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4 text-sm md:text-base"
+                :style="contactStyles">
+                <span v-if="formData.personal.email"
+                  class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-white/20 transition-colors">
+                  <i class="fas fa-envelope" :style="contactIconStyles"></i>
+                  <span class="hidden sm:inline">{{ formData.personal.email }}</span>
+                  <span class="sm:hidden">Email</span>
+                </span>
+
+                <span v-if="formData.personal.phone"
+                  class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-white/20 transition-colors">
+                  <i class="fas fa-phone" :style="contactIconStyles"></i>
+                  <span>{{ formData.personal.phone }}</span>
+                </span>
+
+                <span v-if="formData.personal.wechat"
+                  class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-white/20 transition-colors">
+                  <i class="fab fa-weixin" :style="contactIconStyles"></i>
+                  <span>{{ formData.personal.wechat }}</span>
+                </span>
+
+                <span v-if="formData.personal.address"
+                  class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-white/20 transition-colors">
+                  <i class="fas fa-map-marker-alt" :style="contactIconStyles"></i>
+                  <span class="hidden sm:inline">{{ formData.personal.address }}</span>
+                  <span class="sm:hidden">地址</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- 头像 -->
+            <div v-if="formData.personal.avatar" class="shrink-0" :style="avatarWrapperStyles">
+              <!-- <div class="relative group"> -->
+                <!-- <div
+                  class="absolute -inset-1 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-300">
+                </div> -->
+                <img :src="formData.personal.avatar" alt="头像"
+                  class="relative w-40 h-32 md:w-40 md:h-60 rounded-md object-cover  border-white shadow-xl"
+                  :style="avatarStyles" crossorigin="anonymous" />
+              <!-- </div> -->
+            </div>
           </div>
         </div>
       </header>
 
       <!-- 主体内容 -->
       <main class="resume-content" :style="contentStyles">
-        <RendererSection
-          v-for="section in visibleSections"
-          :key="section.key"
-          :section="section"
-          :template="template"
-          :formData="formData"
-        />
+        <RendererSection v-for="section in visibleSections" :key="section.key" :section="section" :template="template"
+          :formData="formData" />
       </main>
     </template>
 
@@ -54,16 +94,11 @@
           <!-- 头部信息（左侧） -->
           <div class="sidebar-header" :style="sidebarHeaderStyles">
             <div v-if="formData.personal.avatar" class="avatar-wrapper" :style="avatarWrapperStyles">
-              <img 
-                :src="formData.personal.avatar" 
-                alt="头像" 
-                class="avatar" 
-                :style="avatarStyles"
-                crossorigin="anonymous"
-              />
+              <img :src="formData.personal.avatar" alt="头像" class="avatar" :style="avatarStyles"
+                crossorigin="anonymous" />
             </div>
             <h1 class="name" :style="nameStyles">
-              {{ formData.personal.firstName }}<br/>{{ formData.personal.lastName }}
+              {{ formData.personal.firstName }}<br />{{ formData.personal.lastName }}
             </h1>
             <p v-if="formData.personal.jobExpectation" class="job-title" :style="jobTitleStyles">
               {{ formData.personal.jobExpectation }}
@@ -72,26 +107,15 @@
 
           <!-- 左侧栏内容 -->
           <div class="sidebar-content" :style="sidebarContentStyles">
-            <RendererSection
-              v-for="section in leftSections"
-              :key="section.key"
-              :section="section"
-              :template="template"
-              :formData="formData"
-              :compact="true"
-            />
+            <RendererSection v-for="section in leftSections" :key="section.key" :section="section" :template="template"
+              :formData="formData" :compact="true" />
           </div>
         </aside>
 
         <!-- 右侧主内容区 -->
         <main class="main-content" :style="mainContentStyles">
-          <RendererSection
-            v-for="section in rightSections"
-            :key="section.key"
-            :section="section"
-            :template="template"
-            :formData="formData"
-          />
+          <RendererSection v-for="section in rightSections" :key="section.key" :section="section" :template="template"
+            :formData="formData" />
         </main>
       </div>
     </template>
@@ -170,7 +194,7 @@ const rightSections = computed(() => {
 })
 
 // ==================== 容器样式 ====================
-const containerStyles = computed(() => 
+const containerStyles = computed(() =>
   toCSSProperties({
     backgroundColor: props.template.style.global.colors.bg,
     fontFamily: props.template.style.global.fonts.family,
@@ -190,18 +214,18 @@ const containerStyles = computed(() =>
 const headerStyles = computed(() => {
   const bg = props.template.style.components.header.background
   const hasDivider = props.template.layout.header.divider
-  
+
   return toCSSProperties({
     backgroundColor: typeof bg === 'string' ? bg : 'transparent',
-    backgroundImage: typeof bg === 'object' && bg.type === 'gradient' 
-      ? `linear-gradient(135deg, ${bg.colors.join(', ')})` 
+    backgroundImage: typeof bg === 'object' && bg.type === 'gradient'
+      ? `linear-gradient(135deg, ${bg.colors.join(', ')})`
       : 'none',
     padding: props.template.style.components.header.padding,
-    borderRadius: hasDivider 
+    borderRadius: hasDivider
       ? `${props.template.style.global.borders.radius} ${props.template.style.global.borders.radius} 0 0`
       : props.template.style.global.borders.radius,
     marginBottom: hasDivider ? '0' : props.template.style.global.spacing.section,
-    borderBottom: hasDivider 
+    borderBottom: hasDivider
       ? `3px solid ${props.template.style.global.colors.primary}`
       : 'none'
   })
@@ -209,18 +233,18 @@ const headerStyles = computed(() => {
 
 const personalInfoStyles = computed(() => {
   const { align, direction, spacing } = props.template.layout.header
-  
+
   const directionMap = {
     horizontal: 'row' as const,
     vertical: 'column' as const
   }
-  
+
   const alignMap = {
     left: 'flex-start' as const,
     center: 'center' as const,
     right: 'flex-end' as const
   }
-  
+
   return toCSSProperties({
     textAlign: align,
     display: 'flex',
@@ -230,7 +254,7 @@ const personalInfoStyles = computed(() => {
   })
 })
 
-const nameStyles = computed(() => 
+const nameStyles = computed(() =>
   toCSSProperties({
     fontSize: props.template.style.components.header.name.fontSize,
     fontWeight: props.template.style.components.header.name.fontWeight,
@@ -242,7 +266,7 @@ const nameStyles = computed(() =>
   })
 )
 
-const jobTitleStyles = computed(() => 
+const jobTitleStyles = computed(() =>
   toCSSProperties({
     fontSize: props.template.style.components.header.title.fontSize,
     fontWeight: props.template.style.components.header.title.fontWeight,
@@ -251,7 +275,7 @@ const jobTitleStyles = computed(() =>
   })
 )
 
-const contactStyles = computed(() => 
+const contactStyles = computed(() =>
   toCSSProperties({
     display: 'flex',
     flexWrap: 'wrap',
@@ -262,7 +286,7 @@ const contactStyles = computed(() =>
   })
 )
 
-const contactIconStyles = computed(() => 
+const contactIconStyles = computed(() =>
   toCSSProperties({
     fontSize: props.template.style.components.header.contact.iconSize,
     marginRight: '0.25rem'
@@ -270,14 +294,14 @@ const contactIconStyles = computed(() =>
 )
 
 // ==================== 内容区样式 ====================
-const contentStyles = computed(() => 
+const contentStyles = computed(() =>
   toCSSProperties({
     padding: props.template.style.global.spacing.padding.page
   })
 )
 
 // ==================== 两栏布局样式 ====================
-const twoColumnLayoutStyles = computed(() => 
+const twoColumnLayoutStyles = computed(() =>
   toCSSProperties({
     display: 'grid',
     gridTemplateColumns: '35% 1fr',
@@ -288,18 +312,18 @@ const twoColumnLayoutStyles = computed(() =>
 
 const sidebarStyles = computed(() => {
   const bg = props.template.style.components.header.background
-  
+
   return toCSSProperties({
     backgroundColor: typeof bg === 'string' ? bg : props.template.style.global.colors.primary,
-    backgroundImage: typeof bg === 'object' && bg.type === 'gradient' 
-      ? `linear-gradient(135deg, ${bg.colors.join(', ')})` 
+    backgroundImage: typeof bg === 'object' && bg.type === 'gradient'
+      ? `linear-gradient(135deg, ${bg.colors.join(', ')})`
       : 'none',
     padding: '2rem 1.5rem',
     color: '#ffffff'
   })
 })
 
-const sidebarHeaderStyles = computed(() => 
+const sidebarHeaderStyles = computed(() =>
   toCSSProperties({
     textAlign: 'center',
     marginBottom: '2rem',
@@ -308,19 +332,20 @@ const sidebarHeaderStyles = computed(() =>
   })
 )
 
-const avatarWrapperStyles = computed(() => 
+// 头像包装器
+const avatarWrapperStyles = computed(() =>
   toCSSProperties({
-    width: '120px',
-    height: '120px',
+    width: '10rem',
+    height: '12rem',
     margin: '0 auto 1rem',
-    borderRadius: '50%',
+    // borderRadius: '50%',
     overflow: 'hidden',
     border: '4px solid rgba(255,255,255,0.3)',
     boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
   })
 )
 
-const avatarStyles = computed(() => 
+const avatarStyles = computed(() =>
   toCSSProperties({
     width: '100%',
     height: '100%',
@@ -328,13 +353,13 @@ const avatarStyles = computed(() =>
   })
 )
 
-const sidebarContentStyles = computed(() => 
+const sidebarContentStyles = computed(() =>
   toCSSProperties({
     fontSize: props.template.style.global.fonts.size.small
   })
 )
 
-const mainContentStyles = computed(() => 
+const mainContentStyles = computed(() =>
   toCSSProperties({
     padding: '2rem',
     backgroundColor: props.template.style.global.colors.bg
@@ -385,11 +410,11 @@ const mainContentStyles = computed(() =>
 
 .sidebar-header .name {
   color: #ffffff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-header .job-title {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1rem;
 }
 
@@ -414,11 +439,12 @@ const mainContentStyles = computed(() =>
     font-size: 11px;
     box-shadow: none;
   }
-  
+
   .two-column-layout {
     break-inside: avoid;
   }
 }
+
 /* 
 @media (max-width: 768px) {
   .two-column-layout {

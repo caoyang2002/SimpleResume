@@ -21,12 +21,13 @@ export const  creativity :TemplateOptions[] = [
     },
     layout: {
       page: {
-        width: '210mm',
+        decorative:'circle',
+         width: '210mm',
         maxWidth: '210mm',
         columns: 1,
-        padding: '3rem',
-        margin: '0 auto',
-        columnGap: '2rem'
+        columnGap: '0',
+        padding: '2.5rem',
+        margin: '0 auto'
       },
       header: {
         align: 'left',
@@ -41,24 +42,24 @@ export const  creativity :TemplateOptions[] = [
         spacing: '2rem',
         divider: {
           enabled: true,
-        //   style: 'artistic',
+        style: 'line',
           position: 'left'
         }
       },
       item: {
-        // style: 'artistic',
-        // datePosition: 'bottom',
-        // tagStyle: 'colorful',
+        style: 'stacked',
+        datePosition: 'right',
+        tagStyle: 'pill',
         bullet: {
-        //   style: 'diamond',
-          color: '#db2777'
+          style: 'circle',
+           color: '#db2777'
         }
       },
       skill: {
-        // display: 'creative',
-        columns: 3,
+       display: 'bars',
+        columns: 2,
         showLevel: true,
-        // levelStyle: 'creative'
+        levelStyle: 'bar'
       }
     },
     style: {
@@ -67,7 +68,8 @@ export const  creativity :TemplateOptions[] = [
           primary: '#7c3aed',
           secondary: '#db2777',
           accent: '#f0abfc',
-          bg: 'linear-gradient(135deg, #fdf4ff 0%, #faf5ff 100%)',
+         bg: '#ffffff',
+
           text: '#581c87',
           border: '#e9d5ff',
           muted: '#a855f7',

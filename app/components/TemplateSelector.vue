@@ -1,3 +1,4 @@
+ <!-- 模板选择器 -->
 <template>
   <div class="template-selector">
     <!-- 头部筛选区域 -->
@@ -411,18 +412,38 @@ const formatNumber = (num: number): string => {
 
 /* 预览区域 */
 .template-preview {
+   width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #f8f9fa;
+  border-radius: 8px;
+  /* position: relative; */
   position: relative;
   height: 300px;
   background: #f9fafb;
+  background-color: #b9c6f1;
+
   overflow: hidden;
 }
 
 .preview-renderer {
   width: 100%;
   height: 100%;
-  transform: scale(0.35);
-  transform-origin: top left;
+  transform: scale(0.4);
+  transform-origin: top center;
   pointer-events: none;
+  padding: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: white;
+  border-radius: 8px;
+  
+  /* 使用 filter: drop-shadow，不受 transform 影响 */
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15))
+          drop-shadow(0 8px 24px rgba(0, 0, 0, 0.1))
+          drop-shadow(0 4px 12px rgba(0, 0, 0, 0.08));
 }
 
 .preview-overlay {

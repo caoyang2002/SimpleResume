@@ -100,6 +100,8 @@ export interface BorderConfig {
  * 页面布局配置
  */
 export interface PageLayout {
+  // 装饰图案
+  decorative:'none'|'circle'
   // 宽度
   width: string
   // 最大宽度

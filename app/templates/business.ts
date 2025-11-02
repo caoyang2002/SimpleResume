@@ -348,7 +348,7 @@ export const business: TemplateOptions[] = [
       thumbnail: '/templates/creative-art.jpg'
     }
   },
-   // 1. 专业蓝 - 经典商务风格
+   // 1. 专业蓝 
   {
     meta: {
       id: 'professional-blue',
