@@ -298,7 +298,7 @@ const formatNumber = (num: number): string => {
 }
 
 .subtitle {
-  color: #6b7280;
+  color: #fff;
   font-size: 0.875rem;
 }
 

@@ -144,9 +144,9 @@ import ResumeForm from '~/components/ResumeForm.vue'
 import { templates, getTemplateById } from '~/config/templates'
 import { getSampleResumeData } from '~/config/exampleTemplate'
 import { exportResumeToPDF, exportResumeToImage, exportResumeToWord } from '~/utils/export'
+import PrintPreview from '~/components/PrintPreview.vue'
 import type { Template, ResumeData } from '~/types/template'
 import "./assets/css/main.css"
-import PrintPreview from '~/components/PrintPreview.vue'
 
 
 // 打印预览状态

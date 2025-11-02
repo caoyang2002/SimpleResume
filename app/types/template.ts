@@ -125,7 +125,7 @@ export interface HeaderLayout {
   // 间距
   spacing: string
   // 背景样式
-  background: 'filled' | 'gradient' | 'none'
+  background: 'filled' | 'gradient' |  'subtle' |'none' | 'solid'
   // 分隔线
   divider: boolean
 }
@@ -143,8 +143,9 @@ export interface SectionLayout {
   // 分隔线
   divider: {
     enabled: boolean
-    style: 'line' | 'double' | 'dashed' | 'none'
-    position: 'bottom' | 'left' | 'both'
+    style: 'line' | 'double' | 'dashed' | 'none' | 'minimal'| 'bold'| 'solid'|'thick'
+    position: 'bottom' | 'left' | 'both' 
+    border: string
   }
 }
 
@@ -153,14 +154,14 @@ export interface SectionLayout {
  */
 export interface ItemLayout {
   // 布局样式
-  style: 'stacked' | 'inline' | 'grid'
+  style: 'stacked' | 'inline' | 'grid' | 'minimal' | 'academic' | 'clean' |'dynamic'| 'none'|'structured'| 'industrial'| 'friendly'
   // 日期位置
-  datePosition: 'right' | 'below' | 'inline'
+  datePosition: 'right' | 'below' | 'inline' | 'none'
   // 标签样式
-  tagStyle: 'pill' | 'square' | 'minimal'
+  tagStyle: 'pill' | 'square' | 'minimal' | 'text' |'medical' |'none'| 'badge'|'box'| 'rounded'
   // 项目符号
   bullet: {
-    style: 'disc' | 'circle' | 'square' | 'dash' | 'arrow' | 'none'
+    style: 'disc' | 'circle' | 'square' | 'dash' | 'arrow' | 'plus'|'none'
     color: string
   }
 }
@@ -169,14 +170,15 @@ export interface ItemLayout {
  * 技能布局配置
  */
 export interface SkillLayout {
+  
   // 展示方式
-  display: 'grid' | 'list' | 'tags' | 'bars'
+  display: 'grid' | 'list' | 'tags' | 'bars' | 'pills'| 'text'
   // 列数
   columns: number
   // 显示等级
   showLevel: boolean
   // 等级样式
-  levelStyle: 'bar' | 'dots' | 'text' | 'percentage'
+  levelStyle: 'bar' | 'dots' | 'text' |"stars"| 'percentage'  | 'none'
 }
 
 /**
@@ -202,6 +204,7 @@ export interface HeaderStyle {
     fontWeight: number
     color: string
     letterSpacing?: string
+     fontStyle: string
     textTransform?: 'none' | 'uppercase' | 'capitalize'
   }
   // 职位样式
@@ -209,6 +212,8 @@ export interface HeaderStyle {
     fontSize: string
     fontWeight: number
     color: string
+      letterSpacing: string
+        fontStyle: string
   }
   // 联系方式样式
   contact: {
@@ -232,10 +237,14 @@ export interface SectionStyle {
     fontSize: string
     fontWeight: number
     color: string
+              textTransform?:string
+              borderLeft?:string
+                letterSpacing?: string
     iconSize?: string
     iconColor?: string
     dividerColor?: string
     dividerWidth?: string
+    borderBottom?:string
   }
   // 内容样式
   content: {
@@ -261,6 +270,8 @@ export interface ItemStyle {
   subtitle: {
     fontSize: string
     color: string
+      fontStyle: string
+       fontWeight: 100|200|300|400|500|600|700|800|900
   }
   // 日期样式
   date: {
@@ -276,12 +287,19 @@ export interface ItemStyle {
   }
   // 背景
   background?: string
+  
+       border?: {
+          radius?: string,
+          width?: string,
+          style?: string,
+          color?: string
+        }
   // 边框
-  border?: BorderConfig
   // 内边距
   padding: string
   // 外边距
   marginBottom: string
+  
 }
 
 /**
