@@ -1,26 +1,27 @@
 <!-- 简历渲染组件 -->
 <template>
-  <div ref="resumeContentRef" class="resume-renderer" :style="containerStyles">
+  <div ref="resumeContentRef" class="resume-renderer" :style="containerRootStyles">
     <!-- 一栏布局 -->
     <template v-if="template.layout.page.columns === 1">
       <!-- 头部 -->
-      <header class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden"
+       <!--  relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden -->
+      <header class=""
         :style="headerStyles">
         <!-- 装饰性背景图案 -->
-         <div>
-        <div v-if="template.layout.page.decorative === 'none'">
-         
-        </div>
-        <div v-if="template.layout.page.decorative === 'circle'">
- <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
-            <div class="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-24 -translate-x-24"></div>
+        <div>
+          <div v-if="template.layout.page.decorative === 'none'">
+
+          </div>
+          <div v-if="template.layout.page.decorative === 'circle'">
+            <div class="absolute inset-0 opacity-10">
+              <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
+              <div class="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-24 -translate-x-24">
+              </div>
+            </div>
           </div>
         </div>
-        </div>
-
-
-        <div class="container mx-auto px-6 py-8 md:py-12 relative z-10">
+<!-- container mx-auto px-6 py-8 md:py-12 relative z-10 -->
+        <div class="">
           <div class="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
             <!-- 个人信息 -->
             <div class="flex-1 text-center md:text-left" :style="personalInfoStyles">
@@ -39,7 +40,7 @@
                 <span v-if="formData.personal.email"
                   class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-white/20 transition-colors">
                   <i class="fas fa-envelope" :style="contactIconStyles"></i>
-                  <span class="hidden sm:inline">{{ formData.personal.email }}</span>
+                  <span class="hidden sm:inline"  :style="contactTextStyles">{{ formData.personal.email }}</span>
                   <span class="sm:hidden">Email</span>
                 </span>
 
@@ -67,12 +68,12 @@
             <!-- 头像 -->
             <div v-if="formData.personal.avatar" class="shrink-0" :style="avatarWrapperStyles">
               <!-- <div class="relative group"> -->
-                <!-- <div
+              <!-- <div
                   class="absolute -inset-1 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-300">
                 </div> -->
-                <img :src="formData.personal.avatar" alt="头像"
-                  class="relative w-40 h-32 md:w-40 md:h-60 rounded-md object-cover  border-white shadow-xl"
-                  :style="avatarStyles" crossorigin="anonymous" />
+              <img :src="formData.personal.avatar" alt="头像"
+                class="relative w-40 h-32 md:w-40 md:h-60 rounded-md object-cover  border-white shadow-xl"
+                :style="avatarStyles" crossorigin="anonymous" />
               <!-- </div> -->
             </div>
           </div>
@@ -127,6 +128,8 @@ import { computed, onMounted } from 'vue'
 import type { Template, ResumeData } from '~/types/template'
 import type { CSSProperties } from 'vue'
 import RendererSection from './RendererSection.vue'
+import { color } from 'html2canvas/dist/types/css/types/color'
+import { backgroundClip } from 'html2canvas/dist/types/css/property-descriptors/background-clip'
 
 interface Props {
   formData: ResumeData
@@ -194,7 +197,8 @@ const rightSections = computed(() => {
 })
 
 // ==================== 容器样式 ====================
-const containerStyles = computed(() =>
+// 全局
+const containerRootStyles = computed(() =>
   toCSSProperties({
     backgroundColor: props.template.style.global.colors.bg,
     fontFamily: props.template.style.global.fonts.family,
@@ -206,7 +210,7 @@ const containerStyles = computed(() =>
     margin: props.template.layout.page.margin,
     padding: props.template.layout.page.padding,
     position: 'relative',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+    boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
   })
 )
 
@@ -221,13 +225,13 @@ const headerStyles = computed(() => {
       ? `linear-gradient(135deg, ${bg.colors.join(', ')})`
       : 'none',
     padding: props.template.style.components.header.padding,
-    borderRadius: hasDivider
-      ? `${props.template.style.global.borders.radius} ${props.template.style.global.borders.radius} 0 0`
-      : props.template.style.global.borders.radius,
-    marginBottom: hasDivider ? '0' : props.template.style.global.spacing.section,
-    borderBottom: hasDivider
-      ? `3px solid ${props.template.style.global.colors.primary}`
-      : 'none'
+    // borderRadius: hasDivider
+    //   ? `${props.template.style.global.borders.radius} ${props.template.style.global.borders.radius} 0 0`
+    //   : props.template.style.global.borders.radius,
+    // marginBottom: hasDivider ? '0' : props.template.style.global.spacing.section,
+    // borderBottom: hasDivider
+    //   ? `3px solid ${props.template.style.global.colors.primary}`
+    //   : 'none'
   })
 })
 
@@ -281,7 +285,7 @@ const contactStyles = computed(() =>
     flexWrap: 'wrap',
     gap: props.template.style.components.header.contact.gap,
     fontSize: props.template.style.components.header.contact.fontSize,
-    color: props.template.style.components.header.contact.color,
+    color: props.template.style.components.header.contact.fontColor,
     justifyContent: props.template.layout.header.align === 'center' ? 'center' : 'flex-start'
   })
 )
@@ -289,9 +293,17 @@ const contactStyles = computed(() =>
 const contactIconStyles = computed(() =>
   toCSSProperties({
     fontSize: props.template.style.components.header.contact.iconSize,
+    color:props.template.style.components.header.contact.iconColor,
+
     marginRight: '0.25rem'
   })
 )
+const contactTextStyles = computed(()=>toCSSProperties({
+  fontSize: props.template.style.components.header.contact.fontSize,
+    color:props.template.style.components.header.contact.fontColor,
+
+    marginRight: '0.25rem' 
+}))
 
 // ==================== 内容区样式 ====================
 const contentStyles = computed(() =>
@@ -328,7 +340,7 @@ const sidebarHeaderStyles = computed(() =>
     textAlign: 'center',
     marginBottom: '2rem',
     paddingBottom: '1.5rem',
-    borderBottom: '2px solid rgba(255,255,255,0.3)'
+    // borderBottom: '2px solid rgba(255,255,255,0.3)'
   })
 )
 
@@ -338,7 +350,6 @@ const avatarWrapperStyles = computed(() =>
     width: '10rem',
     height: '12rem',
     margin: '0 auto 1rem',
-    // borderRadius: '50%',
     overflow: 'hidden',
     border: '4px solid rgba(255,255,255,0.3)',
     boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
@@ -371,7 +382,8 @@ const mainContentStyles = computed(() =>
 .resume-renderer {
   /* width: 100%; */
   /* min-height: 100vh; */
-  box-sizing: border-box;
+  /* padding: 0; */
+  /* box-sizing: border-box; */
 }
 
 .resume-header {

@@ -26,9 +26,10 @@ export const  creativity :TemplateOptions[] = [
         maxWidth: '210mm',
         columns: 1,
         columnGap: '0',
-        padding: '2.5rem',
+        padding: '0',
         margin: '0 auto'
       },
+      
       header: {
         align: 'left',
         direction: 'vertical',
@@ -135,8 +136,11 @@ export const  creativity :TemplateOptions[] = [
           },
           contact: {
             fontSize: '1rem',
-            color: '#a855f7',
-            iconSize: '18px',
+            fontColor:'#a855f7',
+           iconSize: '18px',
+            iconColor: '#a855f7',
+            
+            
             gap: '1rem'
           },
           background: {

@@ -20,6 +20,7 @@ import { technology } from "./technology"
 
 
 export const templates: TemplateOptions[] = [
+  // ...test_template,
   ...academic,
   ...business,
   ...catering,
@@ -175,7 +176,7 @@ const test_template: TemplateOptions[] = [{
         },
         contact: {
           fontSize: '14px',
-          color: '#64748b',
+          // color: '#64748b',
           iconSize: '16px',
           gap: '0.5rem'
         },

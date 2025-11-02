@@ -13,6 +13,49 @@ export const marketing: TemplateOptions[] = [
       industries: ['销售', '市场', '商务'],
       tags: ['活力', '专业', '营销']
     },
+     layout: {
+      page: {
+        decorative:'circle',
+         width: '210mm',
+        maxWidth: '210mm',
+        columns: 1,
+        columnGap: '0',
+        padding: '2.5rem',
+        margin: '0 auto'
+      },
+      header: {
+        align: 'left',
+        direction: 'vertical',
+        spacing: '1.5rem',
+        background: 'gradient',
+        divider: false
+      },
+      section: {
+        titlePosition: 'top',
+        contentAlign: 'left',
+        spacing: '2rem',
+        divider: {
+          enabled: true,
+        style: 'line',
+          position: 'left'
+        }
+      },
+      item: {
+        style: 'stacked',
+        datePosition: 'right',
+        tagStyle: 'pill',
+        bullet: {
+          style: 'circle',
+           color: '#db2777'
+        }
+      },
+      skill: {
+       display: 'bars',
+        columns: 2,
+        showLevel: true,
+        levelStyle: 'bar'
+      }
+    },
     style: {
       global: {
         colors: {

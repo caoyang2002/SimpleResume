@@ -219,9 +219,10 @@ export interface HeaderStyle {
   }
   // 联系方式样式
   contact: {
-    fontSize: string
-    color: string
-    iconSize: string
+    fontSize?: string
+    fontColor?: string
+    iconSize?: string
+    iconColor?:string
     gap: string
   }
   // 背景
